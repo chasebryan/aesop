@@ -225,6 +225,13 @@ def _handle_repl(args, out: Output) -> int:
 
 
 def main(argv: List[str] | None = None) -> int:
+    # Restore default SIGPIPE handling so `aesop … | head` exits quietly instead
+    # of Python printing a BrokenPipeError at interpreter shutdown.
+    try:
+        import signal
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except (AttributeError, ValueError, OSError):  # not on Windows / non-main thread
+        pass
     _load_modules()
     parser = build_parser()
     args = parser.parse_args(argv)
