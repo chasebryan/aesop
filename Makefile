@@ -1,4 +1,5 @@
 # AESOP — developer convenience targets
+PYTHON ?= python3
 .PHONY: help install install-core dev test smoke demo lint clean
 
 help:
@@ -24,16 +25,16 @@ test:
 	pytest
 
 smoke:
-	@python -m aesop version >/dev/null && echo "version: ok"
-	@python -m aesop list >/dev/null && echo "list: ok"
-	@python -m aesop caesar 'Wkh txlfn eurzq ira' | grep -qi 'quick brown fox' && echo "caesar: ok"
-	@echo 'ZmxhZ3tuZXN0ZWR9' | python -m aesop magic | grep -q 'flag{nested}' && echo "magic: ok"
+	@$(PYTHON) -m aesop version >/dev/null && echo "version: ok"
+	@$(PYTHON) -m aesop list >/dev/null && echo "list: ok"
+	@$(PYTHON) -m aesop caesar 'Wkh txlfn eurzq ira' | grep -qi 'quick brown fox' && echo "caesar: ok"
+	@echo 'ZmxhZ3tuZXN0ZWR9' | $(PYTHON) -m aesop magic | grep -q 'flag{nested}' && echo "magic: ok"
 
 demo:
 	@bash examples/demo.sh
 
 lint:
-	@python -m py_compile $$(find aesop -name '*.py') && echo "compile: ok"
+	@$(PYTHON) -m py_compile $$(find aesop -name '*.py') && echo "compile: ok"
 
 clean:
 	rm -rf build dist *.egg-info .pytest_cache
