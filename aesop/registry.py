@@ -22,6 +22,7 @@ GROUPS: Dict[str, str] = {
     "classical": "Classical ciphers",
     "modern": "Modern & math attacks",
     "encoding": "Encodings & formats",
+    "network": "Network & forensics",
     "meta": "Reference & tooling",
 }
 

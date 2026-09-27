@@ -40,6 +40,7 @@ _MODULES = [
     "aesop.encoding.bases",
     "aesop.encoding.magic",
     "aesop.analysis.autosolve",
+    "aesop.network.pcap",
 ]
 
 _IMPORT_ERRORS: List[Tuple[str, str]] = []

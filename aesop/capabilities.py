@@ -20,6 +20,7 @@ _OPTIONAL = [
     ("fpylll", "LLL lattice reduction (Coppersmith, Boneh-Durfee)"),
     ("z3", "SMT solving for constraint-based recovery"),
     ("requests", "online factordb / hash lookups"),
+    ("scapy", "packet-capture (pcap) forensics & traffic analysis"),
 ]
 
 
