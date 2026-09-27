@@ -67,6 +67,7 @@ aesop prng --lcg -f seq.txt
 ```
 aesop list           # all commands       aesop manual [topic]   # field guide
 aesop repl           # interactive        aesop version          # capabilities
+aesop gui [command]  # graphical workbench (Ctrl+Enter run, Esc stop, Ctrl+U chain result)
 aesop <cmd> -h       # per-command help
 ```
 

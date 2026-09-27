@@ -31,4 +31,4 @@ pip install -e ".${EXTRA}"
 
 echo
 echo "Done. Activate with:  source \"$HERE/.venv/bin/activate\""
-echo "Then try:             aesop version   |   aesop list   |   aesop manual"
+echo "Then try:             aesop version   |   aesop list   |   aesop manual   |   aesop gui"

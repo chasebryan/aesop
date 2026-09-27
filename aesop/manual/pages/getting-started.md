@@ -71,6 +71,15 @@ aesop » manual vigenere
 aesop » quit
 ```
 
+## Prefer a window?
+
+```console
+$ aesop gui
+```
+
+The workbench puts every command behind a form, charts your input as you type,
+and lets you click a result straight into the next step. See `aesop manual gui`.
+
 ## Where to go next
 
 - `aesop manual scoring` — how "looks like English" is measured (the engine

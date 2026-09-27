@@ -35,6 +35,9 @@ behind one friendly command with a **built-in field guide** for every technique.
   active.
 - **Composable.** Every command prints its primary result cleanly to stdout, so
   you can pipe stages together like Unix tools.
+- **A graphical workbench, too.** `aesop gui` opens every command as a form,
+  with live charts of your input and results you can click back into the next
+  step — no extra dependencies.
 
 ---
 
@@ -55,6 +58,7 @@ Then:
 aesop version      # banner + capabilities
 aesop list         # the full command catalogue
 aesop manual       # the field guide index
+aesop gui          # the graphical workbench
 ```
 
 ---
@@ -86,6 +90,35 @@ aesop identify -f mystery.bin                   # what am I looking at?
 aesop freq -f cipher.txt                        # frequencies, IC, Kasiski
 aesop entropy -f blob.bin                        # entropy map
 ```
+
+---
+
+## The workbench
+
+```bash
+aesop gui                  # reopen where you left off
+aesop gui vigenere         # open on a particular command
+aesop gui --theme light    # dark is the default
+```
+
+A desktop window over the same commands as the CLI:
+
+- **Every command is a form**, generated from the command registry — so the
+  options always match the CLI, and a command you add appears on its own. The
+  equivalent command line is shown as you fill it in.
+- **One input, many tools.** The input box persists as you switch commands, and
+  any result (or table cell) can be sent back into it, so
+  identify → decode → break stays in one place.
+- **An inspector** charts the input as you type: entropy, Index of
+  Coincidence, letter frequencies against English, byte distribution, and
+  entropy along a file.
+- **The field guide, clickable**, plus a history of every run in the session.
+- **Long solvers can be stopped.** Commands run in a separate worker process;
+  the window never freezes, and nothing listens on the network.
+
+It uses Tkinter from the standard library. If your Python lacks it, install
+your platform's Tk bindings (`sudo apt install python3-tk` on Debian/Ubuntu).
+See `aesop manual gui` for the full tour and keyboard shortcuts.
 
 ---
 
@@ -135,6 +168,7 @@ aesop entropy -f blob.bin                        # entropy map
 | `manual` | The built-in field guide: `aesop manual <topic>`. |
 | `list` | This catalogue. |
 | `repl` | Interactive session with history & completion. |
+| `gui` | The graphical workbench: forms, charts, clickable results. |
 | `version` | Version + which optional accelerators are installed. |
 
 ---
@@ -150,7 +184,9 @@ aesop/
   modern/    rsa, blockcipher, hashes, prng
   encoding/  bases, magic
   analysis/  identify, freq, entropy, auto
+  network/   pcap
   manual/    the field-guide markdown pages
+  gui/       the workbench: forms, renderer, charts, worker process
   registry, cli, ui, capabilities, repl
 ```
 

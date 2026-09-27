@@ -2,7 +2,8 @@
 aesop.cli — the command-line entry point.
 
 Builds an ``argparse`` parser from the plug-in :mod:`aesop.registry`, wires the
-built-in reference commands (``manual``, ``list``, ``version``, ``repl``), and
+built-in reference commands (``manual``, ``list``, ``version``, ``repl``,
+``gui``), and
 dispatches to handlers.  Import side effects in the technique modules populate
 the registry, so adding a capability never means editing this file.
 """
@@ -149,6 +150,14 @@ def _build_meta(sub: argparse._SubParsersAction, common: argparse.ArgumentParser
                         parents=[common], aliases=["shell", "i"])
     rp.set_defaults(_meta="repl")
 
+    gui = sub.add_parser("gui", help="open the graphical workbench",
+                         parents=[common], aliases=["workbench"])
+    gui.add_argument("start", nargs="?", metavar="command",
+                     help="command to open with (default: the last one used)")
+    gui.add_argument("--theme", choices=["dark", "light"],
+                     help="colour theme (default: the last one used)")
+    gui.set_defaults(_meta="gui")
+
 
 # --------------------------------------------------------------------------- #
 # Meta-command handlers
@@ -225,6 +234,14 @@ def _handle_repl(args, out: Output) -> int:
     return run_repl(out)
 
 
+def _handle_gui(args, out: Output) -> int:
+    if args.start and not resolve(args.start):
+        out.error(f"unknown command {args.start!r} — see `aesop list`")
+        return 2
+    from .gui import run_gui
+    return run_gui(command=args.start, theme=args.theme)
+
+
 def main(argv: List[str] | None = None) -> int:
     # Restore default SIGPIPE handling so `aesop … | head` exits quietly instead
     # of Python printing a BrokenPipeError at interpreter shutdown.
@@ -250,6 +267,8 @@ def main(argv: List[str] | None = None) -> int:
         return _handle_version(args, out)
     if meta == "repl":
         return _handle_repl(args, out)
+    if meta == "gui":
+        return _handle_gui(args, out)
 
     cmd: Command = getattr(args, "_cmd", None)
     if cmd is None:

@@ -21,6 +21,7 @@ _OPTIONAL = [
     ("z3", "SMT solving for constraint-based recovery"),
     ("requests", "online factordb / hash lookups"),
     ("scapy", "packet-capture (pcap) forensics & traffic analysis"),
+    ("tkinter", "the graphical workbench (`aesop gui`)"),
 ]
 
 

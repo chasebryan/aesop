@@ -1,6 +1,6 @@
 # AESOP — developer convenience targets
 PYTHON ?= python3
-.PHONY: help install install-core dev test smoke demo lint clean
+.PHONY: help install install-core dev test smoke demo gui lint clean
 
 help:
 	@echo "AESOP make targets:"
@@ -10,6 +10,7 @@ help:
 	@echo "  make test          # run the full test suite"
 	@echo "  make smoke         # quick end-to-end sanity check"
 	@echo "  make demo          # run the showcase script"
+	@echo "  make gui           # open the graphical workbench"
 	@echo "  make clean         # remove build/test artefacts"
 
 install:
@@ -32,6 +33,9 @@ smoke:
 
 demo:
 	@bash examples/demo.sh
+
+gui:
+	@$(PYTHON) -m aesop gui
 
 lint:
 	@$(PYTHON) -m py_compile $$(find aesop -name '*.py') && echo "compile: ok"
