@@ -92,7 +92,7 @@ def identify(data: bytes) -> List[Guess]:
     if n >= 4 and _HEX_RE.match(stripped) and n % 2 == 0:
         conf = 0.6 + 0.2 * (any(c.isdigit() for c in stripped))
         guesses.append(Guess("hex", "encoding", min(conf, 0.9),
-                             "even length, all hex digits", "aesop from-hex"))
+                             "even length, all hex digits", "aesop hex -d"))
     if n >= 8 and n % 4 == 0 and _B64_RE.match(stripped) and any(c.isdigit() or c in "+/=" for c in stripped):
         guesses.append(Guess("base64", "encoding", 0.75,
                              "length %4==0, base64 alphabet", "aesop b64 -d"))
@@ -101,7 +101,7 @@ def identify(data: bytes) -> List[Guess]:
                              "URL-safe base64 alphabet ('-'/'_')", "aesop b64 -d --url"))
     if n >= 8 and n % 8 == 0 and _B32_RE.match(stripped):
         guesses.append(Guess("base32", "encoding", 0.65,
-                             "A-Z2-7 alphabet, length %8==0", "aesop from-base32"))
+                             "A-Z2-7 alphabet, length %8==0", "aesop b32 -d"))
 
     # ---- Alphabetic classical ciphers ------------------------------------ #
     alpha = clean_text(text)
