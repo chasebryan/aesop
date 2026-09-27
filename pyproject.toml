@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aesop-cryptanalysis"
+version = "1.0.0"
+description = "AESOP — Analytic Encryption-Solving Oracle Platform: an all-in-one cryptanalysis workbench for CTF, research and teaching."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "AESOP contributors" }]
+keywords = ["cryptanalysis", "cryptography", "ctf", "cipher", "rsa", "xor", "vigenere", "security"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security :: Cryptography",
+]
+
+# Only rich is strictly required; every attack degrades gracefully without the
+# optional accelerators.  Install everything with:  pip install "aesop-cryptanalysis[full]"
+dependencies = [
+    "rich>=12.0",
+]
+
+[project.optional-dependencies]
+full = [
+    "sympy>=1.10",       # fast factoring / primality for RSA & DLP attacks
+    "pycryptodome>=3.15", # real cipher primitives for oracle attacks
+    "cryptography>=38.0", # X.509 / key parsing
+    "numpy>=1.21",        # Hill cipher linear algebra
+    "requests>=2.25",     # online factordb / hash lookups
+    "prompt_toolkit>=3.0",# nicer interactive REPL
+]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+aesop = "aesop.cli:main"
+
+[project.urls]
+Homepage = "https://example.invalid/aesop"
+Documentation = "https://example.invalid/aesop/docs"
+
+[tool.setuptools.packages.find]
+include = ["aesop*"]
+
+[tool.setuptools.package-data]
+aesop = ["data/*", "manual/pages/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
