@@ -1,5 +1,8 @@
 # AESOP — developer convenience targets
-PYTHON ?= python3
+# Installs go into a virtual environment: modern distros (PEP 668) refuse a
+# system-wide `pip install`.  Once it exists, every target runs from it.
+VENV ?= .venv
+PYTHON ?= $(if $(wildcard $(VENV)/bin/python),$(VENV)/bin/python,python3)
 .PHONY: help install install-core dev test smoke demo gui lint clean
 
 help:
@@ -13,17 +16,21 @@ help:
 	@echo "  make gui           # open the graphical workbench"
 	@echo "  make clean         # remove build/test artefacts"
 
-install:
-	pip install -e ".[full]"
+$(VENV)/bin/pip:
+	python3 -m venv $(VENV)
+	$(VENV)/bin/python -m pip install --upgrade pip
 
-install-core:
-	pip install -e .
+install: $(VENV)/bin/pip
+	$(VENV)/bin/pip install -e ".[full]"
 
-dev:
-	pip install -e ".[full,dev]"
+install-core: $(VENV)/bin/pip
+	$(VENV)/bin/pip install -e .
+
+dev: $(VENV)/bin/pip
+	$(VENV)/bin/pip install -e ".[full,dev]"
 
 test:
-	pytest
+	$(PYTHON) -m pytest
 
 smoke:
 	@$(PYTHON) -m aesop version >/dev/null && echo "version: ok"

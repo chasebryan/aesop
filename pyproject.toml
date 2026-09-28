@@ -36,6 +36,7 @@ full = [
     "numpy>=1.21",        # Hill cipher linear algebra
     "requests>=2.25",     # online factordb / hash lookups
     "prompt_toolkit>=3.0",# nicer interactive REPL
+    "scapy>=2.5",         # pcap forensics & traffic analysis
 ]
 dev = ["pytest>=7.0"]
 

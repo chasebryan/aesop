@@ -44,13 +44,22 @@ behind one friendly command with a **built-in field guide** for every technique.
 ## Install
 
 ```bash
-# from the project directory
+# from the project directory — creates .venv and installs everything
+./install.sh               # or: ./install.sh core   (needs only 'rich')
+source .venv/bin/activate
+
+# or by hand
+python3 -m venv .venv && source .venv/bin/activate
 pip install -e .           # core (needs only 'rich')
-pip install -e ".[full]"   # + sympy, pycryptodome, cryptography, numpy, … (recommended)
+pip install -e ".[full]"   # + sympy, pycryptodome, cryptography, numpy, scapy, … (recommended)
 
 # or run without installing
-python -m aesop <command>
+python3 -m aesop <command>
 ```
+
+Install into a virtual environment, as above: Debian, Ubuntu and other modern
+distros refuse a system-wide `pip install` with `error:
+externally-managed-environment` (PEP 668).
 
 Then:
 
@@ -235,7 +244,7 @@ the canonical example.
 ## Tests
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[full,dev]"   # inside the virtual environment
 pytest
 ```
 
